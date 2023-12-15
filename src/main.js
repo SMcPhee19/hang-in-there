@@ -103,6 +103,11 @@ var currentPoster;
 
 // event listeners go here 👇
 
+document.querySelector('.show-random').addEventListener('click', getRandomPoster);
+document.addEventListener('DOMContentLoaded', function () { // This is how it changes when page is refreshed
+  getRandomPoster();
+});
+
 // functions and event handlers go here 👇
 // (we've provided two to get you started)!
 function getRandomIndex(array) {
@@ -114,5 +119,26 @@ function createPoster(imageURL, title, quote) {
     id: Date.now(), 
     imageURL: imageURL, 
     title: title, 
-    quote: quote}
+    quote: quote
+  }
+}
+
+function getRandomPoster() {
+  const randomImageIndex = getRandomIndex(images);
+  const randomTitleIndex = getRandomIndex(titles);
+  const randomQuoteIndex = getRandomIndex(quotes);
+
+  const randomImage = (images[randomImageIndex])
+  const randomTitle = (titles[randomTitleIndex])
+  const randomQuote = (quotes[randomQuoteIndex])
+
+  const newPoster = createPoster(randomImage, randomTitle, randomQuote);
+
+  displayPoster(newPoster)
+}
+
+function displayPoster(poster) {
+  document.querySelector('.poster-img').src = poster.imageURL
+  document.querySelector('.poster-title').innerText = poster.title;
+  document.querySelector('.poster-quote').innerText = poster.quote;
 }
