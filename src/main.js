@@ -1,4 +1,18 @@
 // query selector variables go here 👇
+  const posterImageElement = document.querySelector('.poster-img') // use period if calling the class
+  const posterTitleElement = document.querySelector('.poster-title')
+  const posterQuoteElement = document.querySelector('.poster-quote')
+  const newPosterFormTitleInput = document.querySelector('#poster-title') // use hashtag when using the id
+  const newPosterFormUrlInput = document.querySelector('#poster-image-url')
+  const newPosterFormQuoteInput = document.querySelector('#poster-quote')
+  const newPosterFormElement = document.querySelector('.poster-form')
+  const mainPosterSection = document.querySelector('.main-poster')
+  const savedPostersSection = document.querySelector('.saved-posters')
+  const showSavedPostersButton = document.querySelector('.show-saved')
+  const savedPostersBackButton = document.querySelector('.back-to-main')
+  const showRandomPosterButton = document.querySelector('.show-random')
+  const showFormButton = document.querySelector('.show-form')
+  const customPosterBackButton = document.querySelector('.show-main')
 
 // we've provided you with some data to work with 👇
 var images = [
@@ -102,9 +116,14 @@ var savedPosters = [];
 var currentPoster;
 
 // event listeners go here 👇
+showRandomPosterButton.addEventListener('click', getRandomPoster);
+showFormButton.addEventListener('click', showForm);
+customPosterBackButton.addEventListener('click', takeMeBack);
+showSavedPostersButton.addEventListener('click', viewSavedPosters)
+savedPostersBackButton.addEventListener('click', backToMain)
 
-document.querySelector('.show-random').addEventListener('click', getRandomPoster);
-document.addEventListener('DOMContentLoaded', function () { // This is how it changes when page is refreshed
+// On Refresh picture changing
+document.addEventListener('DOMContentLoaded', function () { // This is how it changes the poster when page is refreshed
   getRandomPoster();
 });
 
@@ -128,9 +147,9 @@ function getRandomPoster() {
   const randomTitleIndex = getRandomIndex(titles);
   const randomQuoteIndex = getRandomIndex(quotes);
 
-  const randomImage = (images[randomImageIndex])
-  const randomTitle = (titles[randomTitleIndex])
-  const randomQuote = (quotes[randomQuoteIndex])
+  const randomImage = (images[randomImageIndex]);
+  const randomTitle = (titles[randomTitleIndex]);
+  const randomQuote = (quotes[randomQuoteIndex]);
 
   const newPoster = createPoster(randomImage, randomTitle, randomQuote);
 
@@ -138,7 +157,29 @@ function getRandomPoster() {
 }
 
 function displayPoster(poster) {
-  document.querySelector('.poster-img').src = poster.imageURL
-  document.querySelector('.poster-title').innerText = poster.title;
-  document.querySelector('.poster-quote').innerText = poster.quote;
+  posterImageElement.src = poster.imageURL;
+  posterTitleElement.innerText = poster.title;
+  posterQuoteElement.innerText = poster.quote;
+}
+
+function showForm() {
+  // toggle on the form
+  newPosterFormElement.classList.toggle('hidden')
+  // toggle off the poster
+  mainPosterSection.classList.toggle('hidden')
+}
+
+function takeMeBack() {
+  mainPosterSection.classList.toggle('hidden')
+  newPosterFormElement.classList.toggle('hidden')
+}
+
+function viewSavedPosters() {
+  mainPosterSection.classList.toggle('hidden')
+  savedPostersSection.classList.toggle('hidden')
+}
+
+function backToMain() {
+  mainPosterSection.classList.toggle('hidden')
+  savedPostersSection.classList.toggle('hidden') 
 }
