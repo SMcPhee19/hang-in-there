@@ -13,6 +13,8 @@
   const showRandomPosterButton = document.querySelector('.show-random')
   const showFormButton = document.querySelector('.show-form')
   const customPosterBackButton = document.querySelector('.show-main')
+  const generateCustomPosterButton = document.querySelector('.make-poster');
+
 
 // we've provided you with some data to work with 👇
 var images = [
@@ -121,6 +123,10 @@ showFormButton.addEventListener('click', showForm);
 customPosterBackButton.addEventListener('click', takeMeBack);
 showSavedPostersButton.addEventListener('click', viewSavedPosters)
 savedPostersBackButton.addEventListener('click', backToMain)
+generateCustomPosterButton.addEventListener('click', function(event){
+  event.preventDefault()
+  createCustomPoster()
+})
 
 // On Refresh picture changing
 document.addEventListener('DOMContentLoaded', function () { // This is how it changes the poster when page is refreshed
@@ -139,6 +145,14 @@ function createPoster(imageURL, title, quote) {
     imageURL: imageURL, 
     title: title, 
     quote: quote
+  }
+}
+
+class Poster {
+  constructor(imageURL, title, quote) {
+    this.imageURL = imageURL;
+    this.title = title;
+    this.quote = quote;
   }
 }
 
@@ -182,4 +196,41 @@ function viewSavedPosters() {
 function backToMain() {
   mainPosterSection.classList.toggle('hidden')
   savedPostersSection.classList.toggle('hidden') 
+}
+
+function createCustomPoster() {
+customPoster = new Poster (newPosterFormUrlInput.value, newPosterFormTitleInput.value, newPosterFormQuoteInput.value)
+
+takeMeBack()
+
+posterImageElement.src = customPoster.imageURL;
+posterTitleElement.innerText = customPoster.title;
+posterQuoteElement.innerText = customPoster.quote;
+
+addImage(customPoster.imageURL)
+addTitle(customPoster.title)
+addQuote(customPoster.quote)
+
+currentPoster = customPoster
+
+return currentPoster
+}
+
+
+function addImage(customImageUrl) {
+  if (!images.includes(customImageUrl)) {
+    images.push(customImageUrl)
+  }
+}
+
+function addTitle(customTitleText) {
+  if (!titles.includes(customTitleText)) {
+    titles.push(customTitleText)
+  }
+}
+
+function addQuote(customQuoteText) {
+  if (!quotes.includes(customQuoteText)) {
+    quotes.push(customQuoteText)
+  }
 }
