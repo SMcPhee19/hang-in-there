@@ -13,7 +13,9 @@
   const showRandomPosterButton = document.querySelector('.show-random')
   const showFormButton = document.querySelector('.show-form')
   const customPosterBackButton = document.querySelector('.show-main')
-  const generateCustomPosterButton = document.querySelector('.make-poster');
+  const generateCustomPosterButton = document.querySelector('.make-poster')
+  const savePosterButton = document.querySelector('.save-poster')
+
 
 
 // we've provided you with some data to work with 👇
@@ -127,6 +129,7 @@ generateCustomPosterButton.addEventListener('click', function(event){
   event.preventDefault()
   createCustomPoster()
 })
+savePosterButton.addEventListener('click', addPosterToSavedArray)
 
 // On Refresh picture changing
 document.addEventListener('DOMContentLoaded', function () { // This is how it changes the poster when page is refreshed
@@ -166,8 +169,9 @@ function getRandomPoster() {
   const randomQuote = (quotes[randomQuoteIndex]);
 
   const newPoster = createPoster(randomImage, randomTitle, randomQuote);
-
-  displayPoster(newPoster)
+  // const currentPoster = newPoster
+  currentPoster = newPoster
+  displayPoster(currentPoster)
 }
 
 function displayPoster(poster) {
@@ -232,5 +236,11 @@ function addTitle(customTitleText) {
 function addQuote(customQuoteText) {
   if (!quotes.includes(customQuoteText)) {
     quotes.push(customQuoteText)
+  }
+}
+
+function addPosterToSavedArray() {
+  if (!savedPosters.includes(currentPoster)) {
+    savedPosters.push(currentPoster)
   }
 }
