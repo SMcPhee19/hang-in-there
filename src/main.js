@@ -13,7 +13,10 @@
   const showRandomPosterButton = document.querySelector('.show-random')
   const showFormButton = document.querySelector('.show-form')
   const customPosterBackButton = document.querySelector('.show-main')
-  const generateCustomPosterButton = document.querySelector('.make-poster');
+  const generateCustomPosterButton = document.querySelector('.make-poster')
+  const savePosterButton = document.querySelector('.save-poster')
+  const gridContainer = document.querySelector('.saved-posters-grid')
+
 
 
 // we've provided you with some data to work with 👇
@@ -127,6 +130,7 @@ generateCustomPosterButton.addEventListener('click', function(event){
   event.preventDefault()
   createCustomPoster()
 })
+savePosterButton.addEventListener('click', addPosterToSavedArray)
 
 // On Refresh picture changing
 document.addEventListener('DOMContentLoaded', function () { // This is how it changes the poster when page is refreshed
@@ -166,8 +170,9 @@ function getRandomPoster() {
   const randomQuote = (quotes[randomQuoteIndex]);
 
   const newPoster = createPoster(randomImage, randomTitle, randomQuote);
-
-  displayPoster(newPoster)
+  // const currentPoster = newPoster
+  currentPoster = newPoster
+  displayPoster(currentPoster)
 }
 
 function displayPoster(poster) {
@@ -191,6 +196,8 @@ function takeMeBack() {
 function viewSavedPosters() {
   mainPosterSection.classList.toggle('hidden')
   savedPostersSection.classList.toggle('hidden')
+  console.log(savedPosters.length);
+  displayGrid()
 }
 
 function backToMain() {
@@ -234,3 +241,40 @@ function addQuote(customQuoteText) {
     quotes.push(customQuoteText)
   }
 }
+
+function addPosterToSavedArray() {
+  if (!savedPosters.includes(currentPoster)) {
+    savedPosters.push(currentPoster)
+  }
+}
+
+function displayGrid() {
+  containerDiv = document.createElement('div') // create the container div to hold the elements
+  containerDiv.className = 'saved-psoters-grid' // Apply the CSS class
+
+  // iterate through the array and create a div for each object
+  savedPosters.forEach(function (poster) {
+    // create elements
+    posterDiv = document.createElement('div') // create the individual poster's div
+    posterDiv.className = 'mini-poster' // apply the css class
+
+    imageElement = document.createElement('img') // create the image element
+    imageElement.src = poster.imageURL // connect the 'src' attribute to the URL of the poster image
+
+    titleElement = document.createElement('h2') // create the 'h2' element for the poster title
+    titleElement.innerText = poster.title // connect the 'innerText' attribute to the title of the poster object
+
+    quoteElement = document.createElement('p') // create the 'p' element for the poster quote
+    quoteElement.innerText = poster.quote // connect the 'innerText' attribute to the poster quote of the poster object
+
+    posterDiv.appendChild(imageElement) // append each of the elements to the posterDiv
+    posterDiv.appendChild(titleElement)
+    posterDiv.appendChild(quoteElement)
+
+    containerDiv.appendChild(posterDiv) // append the posterDiv to the divContainer
+  });
+
+  gridContainer.appendChild(containerDiv) // append the container to the grid
+}
+
+    
