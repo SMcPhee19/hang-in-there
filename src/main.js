@@ -132,6 +132,9 @@ generateCustomPosterButton.addEventListener('click', function(event){
   createCustomPoster()
 })
 savePosterButton.addEventListener('click', addPosterToSavedArray)
+posterImageElement.addEventListener('dblclick', justRandomImage)
+posterTitleElement.addEventListener('dblclick', justRandomTitle)
+posterQuoteElement.addEventListener('dblclick', justRandomQuote)
 
 // On Refresh picture changing
 document.addEventListener('DOMContentLoaded', function () { // This is how it changes the poster when page is refreshed
@@ -298,4 +301,25 @@ function deleteSavedPoster(event, poster) {
   if (deletedPosterDiv) {
     deletedPosterDiv.parentNode.removeChild(deletedPosterDiv);
   }
+}
+
+function justRandomImage() {
+  const newRandomImageIndex = getRandomIndex(images);
+  const newRandomImage = (images[newRandomImageIndex]);
+  currentPoster.imageURL = newRandomImage
+  displayPoster(currentPoster)
+}
+
+function justRandomTitle() {
+  const newRandomTitleIndex = getRandomIndex(titles);
+  const newRandomTitle = (titles[newRandomTitleIndex]);
+  currentPoster.title = newRandomTitle
+  displayPoster(currentPoster)
+}
+
+function justRandomQuote() {
+  const newRandomQuoteIndex = getRandomIndex(quotes)
+  const newRandomQuote = (quotes[newRandomQuoteIndex])
+  currentPoster.quote = newRandomQuote
+  displayPoster(currentPoster)
 }
