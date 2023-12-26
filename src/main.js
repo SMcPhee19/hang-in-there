@@ -19,6 +19,7 @@
 
 
 
+
 // we've provided you with some data to work with 👇
 var images = [
   "./assets/bees.jpg",
@@ -196,7 +197,6 @@ function takeMeBack() {
 function viewSavedPosters() {
   mainPosterSection.classList.toggle('hidden')
   savedPostersSection.classList.toggle('hidden')
-  console.log(savedPosters.length);
   displayGrid()
 }
 
@@ -257,6 +257,7 @@ function displayGrid() {
     // create elements
     posterDiv = document.createElement('div') // create the individual poster's div
     posterDiv.className = 'mini-poster' // apply the css class
+    posterDiv.addEventListener('dblclick', (event) => deleteSavedPoster(event, poster));
 
     imageElement = document.createElement('img') // create the image element
     imageElement.src = poster.imageURL // connect the 'src' attribute to the URL of the poster image
@@ -267,9 +268,15 @@ function displayGrid() {
     quoteElement = document.createElement('p') // create the 'p' element for the poster quote
     quoteElement.innerText = poster.quote // connect the 'innerText' attribute to the poster quote of the poster object
 
+    // idElement = document.createElement('p')
+    // idElement.innerText = poster.id
+    // idElement.style.display = 'none'
+    // idElement.id = 'hiddenId'
+
     posterDiv.appendChild(imageElement) // append each of the elements to the posterDiv
     posterDiv.appendChild(titleElement)
     posterDiv.appendChild(quoteElement)
+    // posterDiv.appendChild(idElement)
 
     containerDiv.appendChild(posterDiv) // append the posterDiv to the divContainer
   });
@@ -277,4 +284,18 @@ function displayGrid() {
   gridContainer.appendChild(containerDiv) // append the container to the grid
 }
 
-    
+function deleteSavedPoster(event, poster) {
+  event.stopPropagation()
+  posterToDelete = poster
+  
+  savedPosters.forEach((poster, index) => {
+    if (poster === posterToDelete) {
+      savedPosters.splice(index, 1)
+    }
+  });
+
+  const deletedPosterDiv = event.target.closest('.mini-poster');
+  if (deletedPosterDiv) {
+    deletedPosterDiv.parentNode.removeChild(deletedPosterDiv);
+  }
+}
